@@ -21,19 +21,21 @@ pipeline {
       }
     }
     stage('Deploy'){
-      sshagent(['my-creds']) {
-        sh """
-        echo "${WORKSPACE}"
-        ls -l
-        sudo yum update -y
-        sudo amazon-linux-extras install docker
-        sudo service docker start
-        sudo systemctl enable docker
-        sudo usermod -a -G docker ec2-user
-        docker ps
-        """
-        //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
-        // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
+      steps {
+        sshagent(['my-creds']) {
+          sh """
+          echo "${WORKSPACE}"
+          ls -l
+          sudo yum update -y
+          sudo amazon-linux-extras install docker
+          sudo service docker start
+          sudo systemctl enable docker
+          sudo usermod -a -G docker ec2-user
+          docker ps
+          """
+          //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
+          // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
+        }
       }
     }
   }
