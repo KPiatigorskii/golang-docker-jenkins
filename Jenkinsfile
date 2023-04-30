@@ -35,7 +35,7 @@ pipeline {
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install -y docker-ce'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl status docker' 
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl enable docker'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'docker ps'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo docker ps'
           """
           //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
           // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
