@@ -20,6 +20,8 @@ make test-units
 
 ## Run project
 ``` bash
+
+make build
 make run
 ```
 default port is 8080

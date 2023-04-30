@@ -5,6 +5,7 @@ IMAGE_NAME=charlires/webapp
 APP_NAME=webapp
 # base golang image tag
 GOLANG_TAG=1.9.2-alpine
+#GOLANG_TAG=alpine
 # build args for Dockerfile's
 BUILD_BASE_ARGS=--build-arg APP_NAME=$(APP_NAME) --build-arg GOLANG_TAG=$(GOLANG_TAG)
 BUILD_TEST_ARGS=--build-arg IMAGE_NAME=$(IMAGE_NAME) --build-arg BASE_TAG=$(BASE_TAG)
@@ -38,4 +39,5 @@ run:
 		-p $(PORT):80 \
 		-v `pwd`:/go/src/$(APP_NAME) \
 		-w /go/src/$(APP_NAME) \
-		golang:$(GOLANG_TAG) go run app/main.go
+		$(IMAGE_NAME):$(BASE_TAG) go run app/main.go
+		
