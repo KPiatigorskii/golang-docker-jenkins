@@ -48,10 +48,7 @@ pipeline {
           sh """
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/golang-app/*"
           scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/  ubuntu@${ec2_instanse}:/home/ubuntu/golang-app/
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'cd /home/ubuntu/golang-app/'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'ls'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'make build'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'make run'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'cd /home/ubuntu/golang-app/ && make build && make run'
           """
         }
       }
