@@ -32,7 +32,7 @@ pipeline {
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'apt-cache policy docker-ce'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install docker-ce'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install -y docker-ce'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl status docker' 
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl enable docker'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'docker ps'
