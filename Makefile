@@ -35,7 +35,7 @@ test-unit:
 
 run:
 	@echo ":::running dev environment"
-	docker run --rm -it \
+	docker run -d --rm \
 		-p $(PORT):80 \
 		-v `pwd`:/go/src/$(APP_NAME) \
 		-w /go/src/$(APP_NAME) \
