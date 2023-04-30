@@ -46,11 +46,13 @@ pipeline {
       steps {
         sshagent(['my-creds']) {
           sh """
-          echo "${WORKSPACE}"
-          ls -l
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/golang-app/*"
+          scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/  ubuntu@${ec2_instanse}:/home/ubuntu/golang-app/
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'cd /home/ubuntu/golang-app/'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'ls'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'make build'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'make run'
           """
-          //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
-          // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
         }
       }
     }
