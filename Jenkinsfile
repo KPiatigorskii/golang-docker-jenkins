@@ -27,8 +27,8 @@ pipeline {
           sh """
           echo "${WORKSPACE}"
           ls -l
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt-get update'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install apt-transport-https ca-certificates curl software-properties-common'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt-get -y update'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install -y apt-transport-https ca-certificates curl software-properties-common'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'apt-cache policy docker-ce'
