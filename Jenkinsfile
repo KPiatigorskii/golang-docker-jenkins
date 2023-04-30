@@ -26,7 +26,7 @@ pipeline {
           sh """
           echo "${WORKSPACE}"
           ls -l
-          yum update -y
+          apt-get update
           amazon-linux-extras install docker
           service docker start
           systemctl enable docker
