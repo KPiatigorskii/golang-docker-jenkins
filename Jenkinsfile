@@ -11,7 +11,7 @@ pipeline {
       steps {
         // sh 'make build-test'
         // sh 'make test-unit'
-        // sh 'ls'
+        sh 'ls'
         // junit 'report/report.xml'
       }
     }
