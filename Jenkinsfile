@@ -26,11 +26,11 @@ pipeline {
           sh """
           echo "${WORKSPACE}"
           ls -l
-          sudo yum update -y
-          sudo amazon-linux-extras install docker
-          sudo service docker start
-          sudo systemctl enable docker
-          sudo usermod -a -G docker ec2-user
+          yum update -y
+          amazon-linux-extras install docker
+          service docker start
+          systemctl enable docker
+          usermod -a -G docker ec2-user
           docker ps
           """
           //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
