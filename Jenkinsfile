@@ -20,18 +20,34 @@ pipeline {
         sh 'make build'
       }
     }
-    stage('Deploy'){
+
+    stage('Install Docker to EC2'){
       steps {
         sshagent(['my-creds']) {
           sh """
           echo "${WORKSPACE}"
           ls -l
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt-get update'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo amazon-linux-extras install docker'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo service docker start'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install apt-transport-https ca-certificates curl software-properties-common'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'apt-cache policy docker-ce'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo apt install docker-ce'
+          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl status docker' 
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo systemctl enable docker'
-          ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'sudo usermod -a -G docker ec2-user'
           ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} 'docker ps'
+          """
+          //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
+          // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
+        }
+      }
+    }
+    stage('Deploy'){
+      steps {
+        sshagent(['my-creds']) {
+          sh """
+          echo "${WORKSPACE}"
+          ls -l
           """
           //         ssh -o StrictHostKeyChecking=no ubuntu@${ec2_instanse} "rm -rf /home/ubuntu/my-blog-master/*"
           // scp -o StrictHostKeyChecking=no -r ${WORKSPACE}/my-blog  ubuntu@${ec2_instanse}:/home/ubuntu/my-blog-master/
