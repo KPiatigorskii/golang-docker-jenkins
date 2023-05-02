@@ -56,7 +56,7 @@ pipeline {
       steps{
         withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {                
             sh 'docker login -u $USERNAME -p $PASSWORD'
-            sh "docker tag charlires/webapp:$(git rev-parse --short HEAD) kpiatigorskii/webapp"
+            sh "docker tag charlires/webapp:\$(git rev-parse --short HEAD) kpiatigorskii/webapp"
             sh "docker push kpiatigorskii/webapp"
         }
         
@@ -67,7 +67,7 @@ pipeline {
       steps{
         withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {                
           sh 'docker login -u $USERNAME -p $PASSWORD'
-          sh "docker tag charlires/webapp:$(git rev-parse --short HEAD) kpiatigorskii/webapp:release"
+          sh "docker tag charlires/webapp:\$(git rev-parse --short HEAD) kpiatigorskii/webapp:release"
           sh "docker push kpiatigorskii/webapp:release"
         }
       }      
